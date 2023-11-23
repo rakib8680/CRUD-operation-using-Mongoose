@@ -15,7 +15,7 @@ export type IUser = {
     city: string;
     country: string;
   };
-  orders: {
+  orders?: {
     productName: string;
     price: number;
     quantity: number;
