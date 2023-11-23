@@ -11,13 +11,20 @@ const createUserToDB = async (userData: IUser) => {
 const getAllUsersFromDB = async () => {
   const result = await userModel
     .aggregate([])
-    .project({ username: 1, fullName: 1, age: 1, email: 1, address: 1, _id:0 });
+    .project({
+      username: 1,
+      fullName: 1,
+      age: 1,
+      email: 1,
+      address: 1,
+      _id: 0,
+    });
   return result;
 };
 
 // Retrieve a specific user
-const getSpecificUserFromDB = async (id: number) => {
-  const result = await userModel.findOne({ id });
+const getSpecificUserFromDB = async (userId:number) => {
+  const result = await userModel.findOne({userId});
   return result;
 };
 
