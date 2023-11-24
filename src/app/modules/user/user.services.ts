@@ -3,10 +3,9 @@ import { userModel } from './user.model';
 
 // create user
 const createUserToDB = async (userData: IUser) => {
-
   const user = new userModel(userData); //this is an instance of the model
 
-  if (await user.isUserExist(userData.userId)) { 
+  if (await user.isUserExist(userData.userId)) {
     throw new Error('User already exist');
   }
   const result = await user.save();
@@ -33,8 +32,14 @@ const getSpecificUserFromDB = async (userId: number) => {
 };
 
 // update a users information
-const updateUser = async (id: number) => {
-  const result = await userModel.findOneAndUpdate({ id });
+const updateUser = async (
+  userId: number,
+  data: IUser,
+): Promise<IUser | null> => {
+  const result = await userModel.findOneAndUpdate({ userId }, data, {
+    new: true,
+    runValidators: true,
+  });
   return result;
 };
 

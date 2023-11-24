@@ -15,7 +15,7 @@ const createUser = async (req: Request, res: Response) => {
       message: 'User created successfully!',
       data: result,
     });
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,
@@ -74,8 +74,44 @@ const getSingleUser = async (req: Request, res: Response) => {
   }
 };
 
+// update a user data
+const updateUser = async (req: Request, res: Response) => {
+  const userId = parseInt(req.params.userId);
+  const data = req.body;
+
+  try {
+    const validatedData = userValidation.parse(data);
+
+    const result = await userServices.updateUser(userId, validatedData);
+
+    if (result) {
+      res.status(200).json({
+        success: true,
+        message: 'User updated successfully!',
+        data: result,
+      });
+    } else {
+      res.json({
+        success: false,
+        message: 'User not found!',
+        error: {
+          status: 404,
+          message: 'User not found',
+        },
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'User has not been updated!',
+      error,
+    });
+  }
+};
+
 export const userControllers = {
   createUser,
   getAllUsers,
   getSingleUser,
+  updateUser,
 };

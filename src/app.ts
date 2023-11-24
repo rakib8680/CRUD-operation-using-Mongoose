@@ -7,10 +7,8 @@ import { userRoute } from './app/modules/user/user.routes';
 app.use(express.json());
 app.use(cors());
 
-
-// application route 
-app.use('/api/users', userRoute)
-
+// application route
+app.use('/api/users', userRoute);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');

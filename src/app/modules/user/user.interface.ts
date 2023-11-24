@@ -29,5 +29,4 @@ export type UserMethods = {
   isUserExist(userId: number): Promise<IUser | null>;
 };
 
-
 export type UserModel = Model<IUser, Record<string, never>, UserMethods>;

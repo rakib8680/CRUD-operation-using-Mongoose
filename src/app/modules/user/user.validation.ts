@@ -15,12 +15,11 @@ const userValidation = z.object({
   email: z.string().email('Please provide a valid email'),
   isActive: z.boolean(),
   hobbies: z.array(z.string()),
-  address: z
-    .object({
-      street: z.string(),
-      city: z.string(),
-      country: z.string(),
-    }),
+  address: z.object({
+    street: z.string(),
+    city: z.string(),
+    country: z.string(),
+  }),
   orders: z
     .array(
       z.object({
