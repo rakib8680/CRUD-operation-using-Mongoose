@@ -44,8 +44,8 @@ const updateUser = async (
 };
 
 // delete a user
-const deleteUser = async (id: number) => {
-  const result = await userModel.findOneAndDelete({ id });
+const deleteUser = async (userId: number) => {
+  const result = await userModel.findOneAndDelete({ userId });
   return result;
 };
 
