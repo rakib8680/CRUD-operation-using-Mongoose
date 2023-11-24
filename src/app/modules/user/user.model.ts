@@ -1,8 +1,8 @@
 import { model, Schema } from 'mongoose';
-import { IUser } from './user.interface';
+import { IUser, UserMethods, UserModel } from './user.interface';
 
 // create schema
-const userSchema = new Schema<IUser>({
+const userSchema = new Schema<IUser, UserModel, UserMethods>({
   userId: { type: Number, unique: true, required: [true, 'UserId is required'], trim: true },
   username: { type: String, unique: true, required: [true, 'Username is required'] },
   password: { type: String, required: true },
@@ -29,7 +29,13 @@ const userSchema = new Schema<IUser>({
 });
 
 
+// create methods
+userSchema.methods.isUserExist= async function(userId:number){
+  const existingUser = await userModel.findOne({userId});
+  return existingUser;
+}
+
 
 
 // create model 
-export const userModel = model<IUser>('User', userSchema);
+export const userModel = model<IUser, UserModel>('User', userSchema);
