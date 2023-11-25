@@ -1,5 +1,7 @@
 import { model, Schema } from 'mongoose';
 import { IUser, UserMethods, UserModel } from './user.interface';
+import bcrypt from 'bcrypt';
+import config from '../../config';
 
 // create schema
 const userSchema = new Schema<IUser, UserModel, UserMethods>({
@@ -35,6 +37,17 @@ const userSchema = new Schema<IUser, UserModel, UserMethods>({
       quantity: { type: Number },
     },
   ],
+});
+
+// pre hook to hash password
+userSchema.pre('save', async function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const user = this;
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_rounds),
+  );
+  next();
 });
 
 // create methods
