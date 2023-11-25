@@ -1,7 +1,9 @@
 import { z } from 'zod';
 
 export const orderValidation = z.object({
-  productName: z.string().min(1, { message: 'Please Provide a valid product name' }),
+  productName: z
+    .string()
+    .min(1, { message: 'Please Provide a valid product name' }),
   price: z.number().min(0.01, { message: 'Price must be greater than 0' }),
   quantity: z.number().min(1, { message: 'Quantity cannot be empty' }),
 });

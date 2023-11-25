@@ -248,5 +248,5 @@ export const userControllers = {
   deleteUser,
   createOrder,
   getAllOrders,
-  calculateTotalPrice
+  calculateTotalPrice,
 };
