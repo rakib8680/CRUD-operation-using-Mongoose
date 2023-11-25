@@ -80,7 +80,7 @@ const updateUser = async (req: Request, res: Response) => {
   const data = req.body;
 
   try {
-    const validatedData = userValidation.parse(data);
+    const validatedData = userValidation.partial().parse(data);
 
     const result = await userServices.updateUser(userId, validatedData);
 
@@ -114,13 +114,13 @@ const deleteUser = async (req: Request, res: Response) => {
   const userId = parseInt(req.params.userId);
   try {
     const result = await userServices.deleteUser(userId);
-    if(result){
+    if (result) {
       res.status(200).json({
         success: true,
         message: 'User deleted successfully!',
-        data: null
+        data: null,
       });
-    }else{
+    } else {
       res.json({
         success: false,
         error: {
@@ -143,5 +143,5 @@ export const userControllers = {
   getAllUsers,
   getSingleUser,
   updateUser,
-  deleteUser
+  deleteUser,
 };

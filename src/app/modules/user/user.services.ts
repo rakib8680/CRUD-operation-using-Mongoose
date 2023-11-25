@@ -34,7 +34,7 @@ const getSpecificUserFromDB = async (userId: number) => {
 // update a users information
 const updateUser = async (
   userId: number,
-  data: IUser,
+  data,
 ): Promise<IUser | null> => {
   const result = await userModel.findOneAndUpdate({ userId }, data, {
     new: true,

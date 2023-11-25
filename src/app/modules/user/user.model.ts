@@ -50,6 +50,21 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+userSchema.set("toJSON", {
+  transform: function (doc, ret) {
+    delete ret.password;
+  },
+});
+
+// post hook to remove password field
+userSchema.post('save', function (doc, next) {
+  if (doc) {
+    doc.password = '';
+    // delete doc.password;
+  }
+  next();
+});
+
 // create methods
 userSchema.methods.isUserExist = async function (userId: number) {
   const existingUser = await userModel.findOne({ userId });
