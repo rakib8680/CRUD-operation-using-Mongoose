@@ -1,5 +1,11 @@
 import { Model } from 'mongoose';
 
+export interface IOrder {
+  productName: string;
+  price: number;
+  quantity: number;
+}
+
 export type IUser = {
   userId: number;
   username: string;
@@ -17,11 +23,7 @@ export type IUser = {
     city: string;
     country: string;
   };
-  orders?: {
-    productName: string;
-    price: number;
-    quantity: number;
-  }[];
+  orders?: IOrder[];
 };
 
 // Instance method for if a users exist or not in the database

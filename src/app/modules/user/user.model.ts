@@ -50,17 +50,17 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-userSchema.set("toJSON", {
+// method to remove password field in every response
+userSchema.set('toJSON', {
   transform: function (doc, ret) {
     delete ret.password;
   },
 });
 
-// post hook to remove password field
+// post hook to remove password value in response
 userSchema.post('save', function (doc, next) {
   if (doc) {
     doc.password = '';
-    // delete doc.password;
   }
   next();
 });

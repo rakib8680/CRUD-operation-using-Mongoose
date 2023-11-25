@@ -1,4 +1,4 @@
-import { IUser } from './user.interface';
+import { IOrder, IUser } from './user.interface';
 import { userModel } from './user.model';
 
 // create user
@@ -34,7 +34,7 @@ const getSpecificUserFromDB = async (userId: number) => {
 // update a users information
 const updateUser = async (
   userId: number,
-  data,
+  data: Partial<IUser>,
 ): Promise<IUser | null> => {
   const result = await userModel.findOneAndUpdate({ userId }, data, {
     new: true,
@@ -49,10 +49,24 @@ const deleteUser = async (userId: number) => {
   return result;
 };
 
+// create an order
+const createOrder = async (userId: number, orderData: IOrder) => {
+  const result = await userModel.findOneAndUpdate(
+    { userId },
+    {
+      $push: {
+        orders: orderData,
+      },
+    },
+  );
+  return result;
+};
+
 export const userServices = {
   createUserToDB,
   getAllUsersFromDB,
   getSpecificUserFromDB,
   updateUser,
   deleteUser,
+  createOrder,
 };

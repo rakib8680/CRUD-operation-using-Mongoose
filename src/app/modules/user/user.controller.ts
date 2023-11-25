@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { userServices } from './user.services';
-import userValidation from './user.validation';
+import { orderValidation, userValidation } from './user.validation';
 
 // create a user
 const createUser = async (req: Request, res: Response) => {
@@ -93,7 +93,6 @@ const updateUser = async (req: Request, res: Response) => {
     } else {
       res.json({
         success: false,
-        message: 'User not found!',
         error: {
           status: 404,
           message: 'User not found',
@@ -138,10 +137,47 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
+// create and order
+const createOrder = async (req: Request, res: Response) => {
+  const userId = parseInt(req.params.userId);
+  const orderData = req.body;
+
+  try {
+    const parsedOrderData = orderValidation.parse(orderData);
+    const user = await userServices.getSpecificUserFromDB(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
+
+    await userServices.createOrder(userId, parsedOrderData);
+
+    res.status(201).json({
+      success: true,
+      message: 'Order created successfully!',
+      data: null,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Order has not been created!',
+      error,
+    });
+  }
+};
+
 export const userControllers = {
   createUser,
   getAllUsers,
   getSingleUser,
   updateUser,
   deleteUser,
+  createOrder,
 };
