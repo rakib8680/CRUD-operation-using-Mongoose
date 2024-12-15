@@ -26,6 +26,8 @@ export type IUser = {
   orders?: IOrder[];
 };
 
+
+
 // Instance method for if a users exist or not in the database
 export type UserMethods = {
   isUserExist(userId: number): Promise<IUser | null>;
